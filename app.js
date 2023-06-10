@@ -74,6 +74,11 @@ io.on('connection', (socket) => {
     console.log("Enviado coordenadas: "+coordenadas +" a la room: "+roomId)
     io.to(roomId).emit('recibirCoordenadas', coordenadas);
   })
+  
+  socket.on('iniciarViaje',(roomId)=>{
+    io.to(roomId).emit('RecibirInicio');
+  })
+
 
   socket.on('chat:enviar', (roomId, msg) => {
     const customId = customIds[socket.id];
@@ -115,7 +120,7 @@ io.on('connection', (socket) => {
 //Puerto de socket
 // Cerramos por completo el servidor para desconectar a los usuarios q esten dentro
 
-var portsocket = process.env.PORT || 5050;
+var portsocket = process.env.SOCKETPORT || 5050;
 
 http.listen(portsocket, () => {
   console.log('listening on :', portsocket);
